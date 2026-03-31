@@ -1,0 +1,4 @@
+interface:
+  display_name: "Unity Prototype"
+  short_description: "Fast Unity prototype build/test loop"
+  default_prompt: "Use $unity-prototype-workflow to build, verify, and visually inspect a Unity prototype."
