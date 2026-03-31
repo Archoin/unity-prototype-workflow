@@ -32,8 +32,10 @@ Use this skill for Unity prototype work where the bottleneck is workflow, not ra
 
 - Run a batch import/compile check before deeper implementation.
 - Add Play Mode tests once there is a playable entry scene.
-- Add screenshot capture for key states: start, active gameplay, low-time warning, game over.
+- Add screenshot capture for key states: initial state, active gameplay, warning or pressure state, and success or failure state.
 - For “does this feel alive?” questions, add a short semi-random recording test and inspect a contact sheet or mp4.
+- For video capture, prefer a direct image sequence when the capture window is short. It is simpler and usually more reliable in batchmode and Play Mode tests.
+- For longer recordings, prefer the official Unity Recorder instead of dumping a large frame sequence from tests.
 
 Use the bundled scripts:
 - `scripts/rebuild_generated_assets.sh` for editor execute-method rebuilds
@@ -52,15 +54,15 @@ Read [references/batchmode-gotchas.md](references/batchmode-gotchas.md) when bat
 
 ### 4. Tune Only After Looking
 
-- Review actual screenshots, contact sheets, or video before changing spawn rates, sizes, or hook motion.
+- Review actual screenshots, contact sheets, or video before changing spawn rates, sizes, movement, or interaction timing.
 - Tune readability first:
-  - hook visible against the background
-  - fish silhouettes readable at a glance
-  - enough on-screen activity to avoid dead water
-  - score and timer readable
+  - player avatar, tool, or focus object visible against the background
+  - enemies, targets, pickups, or hazards readable at a glance
+  - enough on-screen activity to avoid visually dead frames
+  - HUD and game-state feedback readable
 - Tune density second:
   - empty frames are worse than slightly crowded frames for early prototypes
-  - a calm game still needs visible motion and targets
+  - even a calm game still needs visible motion and interactable content
 - Tune reward/pace third.
 
 Read [references/visual-review.md](references/visual-review.md) when deciding whether a prototype looks fun enough to keep iterating.

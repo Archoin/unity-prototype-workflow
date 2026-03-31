@@ -17,7 +17,7 @@ Use this reference when Unity batchmode or generated assets are the blocker.
 - Inspect rendered frames, not only assertions.
 - Check sprite references in generated prefabs.
 - Check `SpriteRenderer.m_Sprite` in prefab YAML when generated assets are suspicious.
-- If gameplay scores advance but fish or hook are invisible, suspect renderer references, scale, sorting order, or missing sprite assets.
+- If gameplay state advances but the player avatar, tool, enemies, or targets are invisible, suspect renderer references, scale, sorting order, or missing sprite assets.
 - Add runtime placeholder sprite fallback in scripts when prefab serialization is flaky.
 
 ### Generated prefab references do not survive
