@@ -16,7 +16,9 @@ Use this skill for Unity prototype work where the bottleneck is workflow, not ra
 - Add `Runtime`, `Editor`, and `PlayModeTests` asmdefs early when a project is more than a single script.
 - Add visual capture helpers early. Unity prototypes often fail visually while still passing logic assertions.
 - Treat screenshots and frame sequences as required evidence for prototype quality, not optional polish.
-- If prefab-generated visuals serialize unreliably, add runtime fallbacks for placeholder art rather than blocking on YAML serialization.
+- If prefab-generated visuals serialize unreliably, add temporary runtime fallbacks for placeholder art rather than blocking on YAML serialization.
+- Remove temporary runtime fallbacks once the editor-authored path is reliable again.
+- Before any batchmode run, verify the intended Unity editor version and verify that no live editor already has the project open.
 - Do not run two Unity batch processes against the same project in parallel.
 
 ## Workflow
@@ -26,7 +28,7 @@ Use this skill for Unity prototype work where the bottleneck is workflow, not ra
 - Decide whether the scene should be mostly editor-authored or generated.
 - For prototypes, keep only repeatable content generation in editor scripts.
 - Put gameplay constants in ScriptableObjects or serialized fields, not scattered literals.
-- If placeholder visuals are procedural, make them available from runtime code as a fallback.
+- If placeholder visuals are procedural, make them available from runtime code as a temporary fallback.
 
 ### 2. Set Up The Verification Loop Early
 
@@ -36,6 +38,7 @@ Use this skill for Unity prototype work where the bottleneck is workflow, not ra
 - For “does this feel alive?” questions, add a short semi-random recording test and inspect a contact sheet or mp4.
 - For video capture, prefer a direct image sequence when the capture window is short. It is simpler and usually more reliable in batchmode and Play Mode tests.
 - For longer recordings, prefer the official Unity Recorder instead of dumping a large frame sequence from tests.
+- If the first contact sheet is too sparse to judge motion or readability, regenerate it at higher sampling density before tuning.
 
 Use the bundled scripts:
 - `scripts/rebuild_generated_assets.sh` for editor execute-method rebuilds
@@ -48,7 +51,8 @@ Use the bundled scripts:
 - If Unity cannot compile or import, fix package/asmdef/editor issues first.
 - If logic passes but visuals are missing, inspect rendered frames before touching gameplay tuning.
 - If the game scores points but looks empty, suspect missing renderer references, sprites, sorting order, scale, or camera framing.
-- If a generated prefab loses sprite references, stop assuming prefab YAML is trustworthy and add runtime fallback visuals.
+- For hosted prototypes or mini-games, also check layer assignment, camera depth, clear flags, culling masks, world Z placement, and host-scene bleed-through.
+- If a generated prefab loses sprite references, stop assuming prefab YAML is trustworthy and add temporary runtime fallback visuals.
 
 Read [references/batchmode-gotchas.md](references/batchmode-gotchas.md) when batchmode, asmdefs, prefab serialization, or test runner behavior becomes the blocker.
 
@@ -66,17 +70,6 @@ Read [references/batchmode-gotchas.md](references/batchmode-gotchas.md) when bat
 - Tune reward/pace third.
 
 Read [references/visual-review.md](references/visual-review.md) when deciding whether a prototype looks fun enough to keep iterating.
-
-## Project Conventions
-
-- Prefer:
-  - `Assets/Scripts`
-  - `Assets/Editor`
-  - `Assets/Tests/PlayMode`
-  - `Assets/Generated`
-- Keep generated assets separate from hand-authored assets.
-- Ignore test-runner temp scenes such as `Assets/InitTestScene*.unity`.
-- Persist Unity executable location in a project-local note such as `agent.md` when the workspace already uses that convention.
 
 ## Trigger Phrases
 
