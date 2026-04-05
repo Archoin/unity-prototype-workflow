@@ -40,6 +40,28 @@ Use this skill for Unity prototype work where the bottleneck is workflow, not ra
 - For longer recordings, prefer the official Unity Recorder instead of dumping a large frame sequence from tests.
 - If the first contact sheet is too sparse to judge motion or readability, regenerate it at higher sampling density before tuning.
 
+#### Capture Choice
+
+- Use the simplest capture path that matches the artifact you really need.
+- For a few lightweight screenshots, start with the existing screenshot helper
+  or `ScreenCapture.CaptureScreenshot(...)`.
+- For reliable PNG files from short Play Mode or batchmode test steps, prefer a
+  Unity Recorder image sequence.
+- For motion review over several seconds, prefer Unity Recorder movie capture.
+- Use manual camera plus `RenderTexture` capture only when the normal Game View
+  paths cannot see the thing you need.
+- Avoid separate batchmode and non-batchmode capture implementations unless a
+  single path has already failed in practice.
+- For UI screenshot tests, prefer an authored scene with the capture surface
+  already wired rather than building the full harness in code.
+
+Read [references/capture-options.md](references/capture-options.md) when you
+need the detailed tradeoffs or decision guide.
+
+Read [references/capture-snippets.md](references/capture-snippets.md) when you
+need implementation patterns for screenshots, image sequences, movie recording,
+or manual render-target capture.
+
 Use the bundled scripts:
 - `scripts/rebuild_generated_assets.sh` for editor execute-method rebuilds
 - `scripts/run_playmode_tests.sh` for test execution
